@@ -10,9 +10,9 @@ console.clear();
 // Create --help
 const command = process.argv[2]; // First argument is command
 const args = process.argv.splice(3); // > second argument is ...args
-const map = new Map<string, any>();
+const map = new Map<string, Function>();
 
-const cb = (fn: any) => map.set(fn.name, fn);
+const cb = (fn: Function) => map.set(fn.name, fn);
 [cat, touch, events, buffer, streams, http].forEach(cb);
 
 const fn = map.get(command);

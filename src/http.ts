@@ -14,15 +14,15 @@ export default function http() {
   };
 
   makeRequest(options)
-    .then((value) => console.log("Response data: ", value))
+    .then((result) => console.log("Response data: ", result.data))
     .catch((error) => console.log("Error handled: ", error));
 
   makeRequest(options2, { username: "test", password: "Dani.123" })
-    .then((value) => console.log("Response data: ", value))
+    .then((result) => console.log("Response data: ", result.data))
     .catch((error) => console.log("Error handled: ", error));
 
   function makeRequest(options: RequestOptions, body?: any) {
-    return new Promise((resolve, reject) => {
+    return new Promise<{ data: any }>((resolve, reject) => {
       function errorHandler(errorMessage: string = "Error") {
         reject(errorMessage);
       }
@@ -30,7 +30,7 @@ export default function http() {
       const req = request(options, (res: IncomingMessage) => {
         function endHandler() {
           const data = Buffer.concat(chunks).toString();
-          resolve(JSON.parse(data));
+          resolve({ data: JSON.parse(data) });
         }
 
         res.on("error", errorHandler);
